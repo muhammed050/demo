@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { googleRoute } from './google.mjs';
 const execFileAsync=promisify(execFile);
 const PORT=Number(process.env.API_PORT||8787), DATA_DIR=path.resolve(process.env.DELEGATION_DATA_DIR||'.delegation');
 const SECRETS_FILE=path.join(DATA_DIR,'secrets.json'), APPROVALS_FILE=path.join(DATA_DIR,'approvals.json');
@@ -18,7 +19,7 @@ function decrypt(v){const d=crypto.createDecipheriv('aes-256-gcm',encKey,Buffer.
 async function saveSecret(n,v){const a=await readJson(SECRETS_FILE,{});a[n]=encrypt(v);await writeJson(SECRETS_FILE,a)}
 async function getSecret(n){const a=await readJson(SECRETS_FILE,{});return a[n]?decrypt(a[n]):null}
 async function removeSecret(n){const a=await readJson(SECRETS_FILE,{});delete a[n];await writeJson(SECRETS_FILE,a)}
-const permissionDefaults={github:{read:true,write:true,branch:true,commit:true,pullRequest:true,merge:false},browser:{browse:true,interact:false},terminal:{enabled:true,allowedCommands:['npm install','npm run build','npm run test','npm run lint']},vercel:{read:true,previewDeploy:true,productionDeploy:false}};
+const permissionDefaults={github:{read:true,write:true,branch:true,commit:true,pullRequest:true,merge:false},browser:{browse:true,interact:false},terminal:{enabled:true,allowedCommands:['npm install','npm run build','npm run test','npm run lint']},vercel:{read:true,previewDeploy:true,productionDeploy:false},google:{searchConsole:true,analytics:true,pageSpeed:true,trends:true,sheets:true}};
 function send(res,status,body){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Access-Control-Allow-Origin':CLIENT_URL,'Access-Control-Allow-Credentials':'true'});res.end(JSON.stringify(body))}
 async function body(req){let raw='';for await(const c of req)raw+=c;return raw?JSON.parse(raw):{}}
 function redirect(res,location){res.writeHead(302,{Location:location});res.end()}
@@ -31,7 +32,8 @@ async function route(req,res){
  if(req.method==='OPTIONS'){res.writeHead(204,{'Access-Control-Allow-Origin':CLIENT_URL,'Access-Control-Allow-Headers':'Content-Type','Access-Control-Allow-Credentials':'true','Access-Control-Allow-Methods':'GET,POST,DELETE,OPTIONS'});return res.end()}
  const url=new URL(req.url,`http://localhost:${PORT}`);
  try{
-  if(req.method==='GET'&&url.pathname==='/api/integrations'){const s=await readJson(SECRETS_FILE,{});return send(res,200,{github:!!s.github,vercel:!!s.vercel,terminal:true,browser:true,permissions:permissionDefaults})}
+  if(url.pathname.startsWith('/api/google/')){const handled=await googleRoute(req,res,url);if(handled!==false)return;}
+  if(req.method==='GET'&&url.pathname==='/api/integrations'){const s=await readJson(SECRETS_FILE,{});return send(res,200,{github:!!s.github,vercel:!!s.vercel,google:!!(await fs.access(path.join(DATA_DIR,'google.json')).then(()=>true).catch(()=>false)),terminal:true,browser:true,permissions:permissionDefaults})}
   if(req.method==='GET'&&url.pathname==='/api/github/start'){if(!requireEnv(res,['GITHUB_CLIENT_ID','GITHUB_CLIENT_SECRET']))return;const state=crypto.randomBytes(24).toString('hex');oauthStates.set(state,{provider:'github',expires:Date.now()+600000});const callback=process.env.GITHUB_OAUTH_REDIRECT_URI||`http://localhost:${PORT}/api/github/callback`;const q=new URLSearchParams({client_id:process.env.GITHUB_CLIENT_ID,redirect_uri:callback,scope:'repo',state});return redirect(res,`https://github.com/login/oauth/authorize?${q}`)}
   if(req.method==='GET'&&url.pathname==='/api/github/callback'){const state=url.searchParams.get('state'),stored=oauthStates.get(state);oauthStates.delete(state);if(!stored||stored.expires<Date.now())return send(res,400,{error:'Invalid or expired OAuth state'});if(url.searchParams.get('error'))return redirect(res,`${CLIENT_URL}/?integration=github&error=denied`);const code=url.searchParams.get('code'),callback=process.env.GITHUB_OAUTH_REDIRECT_URI||`http://localhost:${PORT}/api/github/callback`;const tr=await fetch('https://github.com/login/oauth/access_token',{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},body:JSON.stringify({client_id:process.env.GITHUB_CLIENT_ID,client_secret:process.env.GITHUB_CLIENT_SECRET,code,redirect_uri:callback})}),token=await tr.json();if(!token.access_token)return send(res,400,{error:token.error_description||'GitHub OAuth failed'});await saveSecret('github',token.access_token);return redirect(res,`${CLIENT_URL}/?integration=github&connected=1`)}
   if(req.method==='GET'&&url.pathname==='/api/vercel/start'){if(!requireEnv(res,['VERCEL_CLIENT_ID','VERCEL_CLIENT_SECRET']))return;const state=crypto.randomBytes(24).toString('hex');oauthStates.set(state,{provider:'vercel',expires:Date.now()+600000});const callback=process.env.VERCEL_OAUTH_REDIRECT_URI||`http://localhost:${PORT}/api/vercel/callback`;const q=new URLSearchParams({client_id:process.env.VERCEL_CLIENT_ID,redirect_uri:callback,state});return redirect(res,`https://vercel.com/oauth/authorize?${q}`)}
