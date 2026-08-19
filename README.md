@@ -1,102 +1,726 @@
-<p align="center">
-  <img src="public/images/the-delegation.svg" width="256" alt="The Delegation Logo">
-</p>
+﻿# Eldevo AI Agency — Autonomous SEO & Website Intelligence
 
-<p align="center">
-  <a href="https://arturitu.github.io/the-delegation/"><b>Launch The Delegation · Full Experience *</b></a>
-</p>
+An open-source experimental platform for analyzing websites, repositories, SEO performance, and growth signals using AI agents and external integrations.
 
-> [!IMPORTANT]
-> **\*** This experience requires **BYOK (Bring Your Own Key)**. You will need a **[Gemini API key](https://aistudio.google.com/app/apikey)** to run the simulation. Deep integration enables native support for text, and multimodal generation (**Nano Banana**, **Lyria 3**, **Veo 3.1**). You can also **clone or fork** this repository to run it locally.
-<div align="center">
-  <img src="public/images/the-delegation-UI.jpg" width="100%" alt="The Delegation Hero">
-</div>
+> This project is an independent extension of the original [The Delegation](https://github.com/arturitu/the-delegation) project. Please review the original project's license and attribution requirements before redistributing or modifying this project.
 
-<br/>
+---
 
-## What is The Delegation?
+## ✨ What is Eldevo AI Agency?
 
-# A no-code 3D playground to explore, design, and interact with Agentic AI systems
+Eldevo AI Agency transforms an AI-agent playground into a practical website intelligence and SEO analysis environment.
 
-This project is designed for **AI enthusiasts, educators, and creative developers** looking to understand multi-agent collaboration in a living 3D office without writing a single line of code.
+The goal is simple:
 
-## Getting Started
+**Connect a website → inspect its code → analyze SEO → collect performance data → generate recommendations → request approval before making changes.**
 
-1. **Install dependencies:**
+The system is designed around human approval rather than unrestricted autonomous modification.
 
-```bash
+---
+
+## 🚀 Main Capabilities
+
+### 🌐 Website Analysis
+
+- Inspect public websites.
+- Fetch HTML and HTTP metadata.
+- Analyze technical SEO signals.
+- Inspect public resources.
+- Detect potential SEO problems.
+- Analyze page structure and metadata.
+- Prepare actionable SEO recommendations.
+
+### 🐙 GitHub Integration
+
+The agent can work with a connected GitHub account to:
+
+- List repositories.
+- Read source files.
+- Search source code.
+- Inspect project structure.
+- Analyze implementation details.
+- Prepare proposed file changes.
+- Request human approval before editing files.
+
+### 🔎 Google Integrations
+
+The project includes integrations for:
+
+- Google Search Console
+- Google Analytics
+- PageSpeed Insights
+- Google Trends
+- Google Sheets
+
+These integrations allow the agent to combine technical website information with search, traffic, performance, and trend data.
+
+### 📊 SEO Analysis
+
+The platform is designed to analyze:
+
+- Page titles
+- Meta descriptions
+- Canonical URLs
+- Heading structure
+- Technical SEO
+- Page performance
+- Search visibility
+- Search queries
+- Clicks
+- Impressions
+- CTR
+- Analytics traffic
+- Keyword opportunities
+- Google Trends
+- Content opportunities
+
+---
+
+# 🔄 SEO Analysis Workflow
+
+The intended workflow is:
+
+```text
+1. Enter website URL
+        ↓
+2. Connect GitHub repository
+        ↓
+3. Connect Google services when required
+        ↓
+4. Inspect website
+        ↓
+5. Analyze technical SEO
+        ↓
+6. Analyze PageSpeed
+        ↓
+7. Analyze Search Console
+        ↓
+8. Analyze Analytics
+        ↓
+9. Research Google Trends
+        ↓
+10. Combine collected data
+        ↓
+11. AI SEO analysis
+        ↓
+12. Generate recommendations
+        ↓
+13. Generate optional report
+        ↓
+14. Request human approval
+        ↓
+15. Prepare code changes
+        ↓
+16. Apply approved changes
+
+The goal is to let the AI perform analysis while keeping important modifications under human control.
+
+🧠 AI Agent Architecture
+
+The application uses an external-tool architecture.
+
+The AI agent can request tools such as:
+
+github_read_file
+github_search_code
+github_edit_file
+
+
+browser_fetch
+terminal_run
+
+
+google_search_console
+google_analytics
+google_pagespeed
+google_trends
+google_sheets_report
+
+Tool access is controlled through permissions.
+
+State-changing operations should require explicit human approval.
+
+🔐 Human Approval Model
+
+The system intentionally avoids unrestricted autonomous modifications.
+
+Example:
+
+AI detects SEO problem
+        ↓
+AI analyzes the problem
+        ↓
+AI prepares proposed change
+        ↓
+Human approval requested
+        ↓
+Approved
+        ↓
+Change is executed
+
+This architecture is intended to provide a safer environment for AI-assisted website management.
+
+🛡️ Security
+
+Never commit:
+
+.env
+OAuth client secrets
+API keys
+Access tokens
+Refresh tokens
+Private credentials
+.delegation/
+
+Use .env.example as the configuration template.
+
+Example:
+
+API_PORT=8787
+CLIENT_URL=http://localhost:3000
+
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GITHUB_OAUTH_REDIRECT_URI=http://localhost:8787/api/github/callback
+
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_OAUTH_REDIRECT_URI=http://localhost:8787/api/google/callback
+
+
+PAGESPEED_API_KEY=
+
+Each developer should use their own OAuth applications and API credentials.
+
+See SECURITY.md for security guidelines.
+
+🧩 Project Structure
+.
+├── src/
+│   ├── core/
+│   │   └── agent/
+│   │       └── tools/
+│   ├── interface/
+│   ├── simulation/
+│   └── data/
+│
+├── server/
+│   ├── index.mjs
+│   └── google.mjs
+│
+├── scripts/
+├── public/
+│
+├── .env.example
+├── .gitignore
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── PROJECT_SUMMARY.md
+└── package.json
+⚙️ Requirements
+
+Recommended environment:
+
+Node.js 22+
+npm
+Git
+Modern Chromium-based browser
+
+Optional integrations require their own credentials.
+
+📦 Installation
+
+Clone the repository:
+
+git clone https://github.com/muhammed050/demo.git
+cd demo
+
+Install dependencies:
+
 npm install
-```
 
-2. **Run the development server:**
+Create the local environment file.
 
-```bash
+Windows PowerShell
+Copy-Item .env.example .env
+Linux / macOS
+cp .env.example .env
+
+Then edit .env and provide your own credentials.
+
+Never commit .env.
+
+▶️ Development
+
+Start the frontend:
+
 npm run dev
-```
 
-3. **Open the app:** Navigate to the local URL shown in your terminal (usually `http://localhost:3000/the-delegation`).
+Start the tools server:
 
-## Features
+npm run tools
 
-### Agentic AI System (v0.2.0)
+If supported by the project configuration:
 
-- **Team Editor (React Flow):** Create your own [multi-agent design patterns](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/) using an interactive node-based interface.
-- **6 Predefined Teams:** Industry-specific templates (Creative Agency, Film Studio, PR Agency, etc.) to get you started.
-- **Multimodal Outputs:** Generate professional assets including text, image (Nano Banana), music (Lyria 3), and video (Veo 3.1) directly from your agent teams.
-- **Per-Agent LLM:** Assign different [Gemini Models](https://ai.google.dev/gemini-api/docs/models) to specific roles (e.g., Flash for speed, Pro for reasoning).
-- **Cost & Token Tracking:** Real-time estimation of usage costs and token consumption for transparency.
-- **PR-style Workflows:** Learn about Pull Request and Review workflows where agents with `human-in-the-loop` properties require your approval to proceed.
-- **Guardrails:** Controlled generation with the `Auto-approve output` option, ensuring quality before final asset production.
-- **Technical Logs:** Improved visibility into raw LLM traces, tool calls, and structured agent responses.
+npm run dev:full
 
-### Embodied Simulation
+Default development endpoints:
 
-- **Hybrid GPU/CPU Architecture:** A high-performance **3D simulation** built with **Three.js WebGPU** where autonomous LLM-powered characters collaborate in a shared physical workspace.
-- **Intelligent Pathfinding:** NPCs utilize a NavMesh to navigate the office, finding and claiming specific "Points of Interest" (desks, seats, computers) based on their current task. Pathfinding is powered by [three-pathfinding](https://github.com/donmccurdy/three-pathfinding).
-- **Dynamic State Machine:** Characters transition naturally between walking, sitting, working, and talking, with sync'ed 3D speech bubbles and expressions.
+Frontend:
+http://localhost:3000
 
-### Interactive UI
 
-- **Team Flow Visualizer:** Real-time node-based view of your agent hierarchy and task flows.
-- **Simulated PR Reviews:** Interactive modals for reviewing agent proposals, providing feedback, and merging tasks.
-- **Real-time 3D Overlay:** Status indicators and interaction menus projected from 3D space into a polished UI.
-- **Agent Inspector:** Select any agent to view their "thoughts", mission, and history.
-- **Kanban & Action Logs:** Complete transparency into the agency's progress and tool-level interactions.
+Tools server:
+http://localhost:8787
+🧪 Validation
 
-## Tech Stack Deep Dive
+Run TypeScript validation:
 
-- **Engine:** [Three.js](https://threejs.org/) (WebGPU & TSL) for advanced rendering and compute.
-- **UI:** [React](https://react.dev/) & [React Flow](https://reactflow.dev/) for node-based team visualization.
-- **AI:** [Gemini API](https://deepmind.google/technologies/gemini/) is the core LLM provider. We follow official prompting best practices for:
-    - **Images:** [Nano Banana Prompt Guide](https://cloud.google.com/blog/products/ai-machine-learning/ultimate-prompting-guide-for-nano-banana)
-    - **Video:** [Veo 3.1 Prompt Guide](https://cloud.google.com/blog/products/ai-machine-learning/ultimate-prompting-guide-for-veo-3-1)
-    - **Music:** [Lyria 3 Prompt Guide](https://deepmind.google/models/lyria/prompt-guide/)
-- **State:** [Zustand](https://github.com/pmndrs/zustand) for a unified, reactive store across the 3D world and React UI.
-- **3D Assets:** Custom models and animations rigged in [Blender](https://blender.org), using an instanced animation system.
+npm run lint
 
-## Roadmap
+Build the production application:
 
-- **World Building**
-    - [ ] **Office/3D Space Editor:** Drag-and-drop workspace layout and POI customization.
-    - [ ] **Dynamic Environment:** Real-time prop generation and environment modification by agents.
-- **Advanced Interactions**
-    - [ ] **Advanced Embodied AI:** Deeper integration between agent reasoning and physical 3D world actions.
-    - [ ] **Enhanced Animations:** Richer character expressions and more fluid, context-aware animations.
-    - [ ] **Human-Agent Spatial Interaction:** Direct collaboration and richer multi-party interactions in the 3D office.
-    - [ ] **Inter-Agent Knowledge Sharing:** Long-term memory for agent teams across projects.
-- **Refinement**
-    - [ ] **Architecture Decoupling:** Further separation of core logic from the simulation environment.
-    - [ ] **UX/UI Overhaul:** Unified CSS styling based on "The Delegation" brand identity.
+npm run build
 
-## Developer Note
+Preview the production build:
 
-This release (**v0.2.0**) was developed entirely using **Google Antigravity** as the primary IDE and powered by **Gemini 3 Flash**.
+npm run preview
 
-## License & IP
+A successful build should finish without TypeScript errors.
 
-This project follows a dual-licensing model:
+🔑 OAuth Integrations
 
-- **Source Code (MIT):** All logic, shaders, and UI code are free to use, modify, and distribute.
-- **3D Models & Assets (CC BY-NC 4.0):** The custom 3D office and character models are Copyright © 2026 **Arturo Paracuellos ([unboring.net](https://unboring.net))**. They are free for personal and educational use but _cannot_ be used for commercial purposes without permission.
+OAuth integrations are optional.
 
-Developed with ❤️ by [Arturo Paracuellos](https://unboring.net)
+GitHub
+
+Configure your own GitHub OAuth application:
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GITHUB_OAUTH_REDIRECT_URI=http://localhost:8787/api/github/callback
+
+The application uses GitHub OAuth to access repositories authorized by the user.
+
+Google
+
+Configure your own Google OAuth client:
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_OAUTH_REDIRECT_URI=http://localhost:8787/api/google/callback
+
+Enable only the Google APIs required by your installation.
+
+Supported functionality includes:
+
+Search Console
+Analytics
+Sheets
+Trends-related research
+PageSpeed Insights
+Vercel
+
+Vercel integration is optional:
+
+VERCEL_CLIENT_ID=
+VERCEL_CLIENT_SECRET=
+VERCEL_OAUTH_REDIRECT_URI=http://localhost:8787/api/vercel/callback
+
+The integration can be disabled if deployment functionality is not required.
+
+📊 SEO Analysis Architecture
+
+The main purpose of the integrations is to create a unified SEO analysis workflow.
+
+                    Website
+                       │
+              ┌────────┴────────┐
+              │                 │
+           Browser           GitHub
+              │                 │
+              └────────┬────────┘
+                       │
+          ┌────────────┼────────────┐
+          │            │            │
+      PageSpeed   Search Console  Analytics
+          │            │            │
+          └────────────┼────────────┘
+                       │
+                 Google Trends
+                       │
+                       ▼
+                AI SEO Analysis
+                       │
+              ┌────────┴────────┐
+              │                 │
+       Recommendations       Report
+              │                 │
+              │          Google Sheets
+              │
+              ▼
+       Human Approval
+              │
+              ▼
+       Proposed Changes
+📋 Example SEO Report
+
+A generated report can contain:
+
+Category    Metric    Result    Recommendation
+Technical SEO    Title    Too long    Shorten title
+Technical SEO    Meta Description    Missing    Add description
+Technical SEO    Canonical    Missing    Add canonical URL
+Performance    Performance Score    62    Optimize assets
+Search    Clicks    1,240    Improve CTR
+Search    Impressions    32,400    Target additional queries
+Content    Keywords    Limited    Expand topical coverage
+📑 Google Sheets Reporting
+
+The Google Sheets tool accepts a two-dimensional array.
+
+Example:
+
+{
+  "spreadsheetId": "YOUR_SPREADSHEET_ID",
+  "title": "SEO Report",
+  "values": [
+    ["Metric", "Value", "Recommendation"],
+    ["Title", "Too long", "Shorten the title"],
+    ["Performance", "62", "Optimize images and scripts"],
+    ["Meta Description", "Missing", "Add a unique description"]
+  ]
+}
+
+The values property is intentionally defined as an array of arrays so that it can be represented correctly in AI function-calling schemas.
+
+🤖 AI Usage & API Quotas
+
+AI providers may enforce request, token, and rate limits.
+
+The application should avoid unnecessary repeated AI requests.
+
+A recommended architecture is:
+
+Collect website data
+        ↓
+Collect SEO data
+        ↓
+Combine results
+        ↓
+One focused AI analysis
+        ↓
+Generate recommendations
+        ↓
+Generate report
+
+Instead of sending multiple independent AI requests for every small SEO issue.
+
+This reduces unnecessary API usage and makes the analysis more consistent.
+
+🧰 External Tool Permissions
+
+The project supports permission-based access to external capabilities.
+
+Examples include:
+
+GitHub
+Browser
+Terminal
+Google
+Vercel
+
+Example permission model:
+
+{
+  "github": {
+    "read": true,
+    "write": true,
+    "branch": true,
+    "commit": true,
+    "pullRequest": true,
+    "merge": false
+  },
+  "browser": {
+    "browse": true,
+    "interact": false
+  },
+  "terminal": {
+    "enabled": true
+  },
+  "google": {
+    "searchConsole": true,
+    "analytics": true,
+    "pageSpeed": true,
+    "trends": true,
+    "sheets": true
+  }
+}
+
+Production deployments and potentially destructive operations should remain disabled or approval-gated unless explicitly enabled.
+
+🔄 Recommended Agent Workflow
+
+For a complete website audit:
+
+Website URL
+    ↓
+Inspect website
+    ↓
+Identify repository
+    ↓
+Read relevant source files
+    ↓
+Run PageSpeed
+    ↓
+Read Search Console
+    ↓
+Read Analytics
+    ↓
+Research Google Trends
+    ↓
+Combine collected information
+    ↓
+AI SEO analysis
+    ↓
+Generate SEO report
+    ↓
+Recommend changes
+    ↓
+Request human approval
+    ↓
+Apply approved changes
+
+The agent should avoid repeatedly asking the AI model to analyze information that has already been collected.
+
+🎯 SEO-First Mode
+
+The platform can also be used as a focused SEO analysis system without requiring every integration.
+
+A minimal SEO audit can work with:
+
+Website URL
+      ↓
+Browser inspection
+      ↓
+PageSpeed
+      ↓
+Technical SEO analysis
+      ↓
+AI recommendations
+
+Additional data sources can be enabled when available.
+
+This makes the system useful even when Google Analytics, Search Console, or GitHub are not connected.
+
+📝 Example Agent Task
+
+Example:
+
+Analyze https://example.com for SEO issues.
+
+
+Check:
+
+
+- Technical SEO
+- Page title
+- Meta description
+- Headings
+- Canonical URL
+- Robots directives
+- Structured data
+- Open Graph metadata
+- PageSpeed
+- Internal links
+- Content quality
+
+
+Return:
+
+
+1. Critical issues
+2. High-priority issues
+3. Medium-priority issues
+4. Recommended improvements
+5. Suggested code changes
+
+
+Do not modify the repository without human approval.
+🤝 Contributing
+
+Contributions are welcome.
+
+Please read CONTRIBUTING.md before submitting changes.
+
+Before submitting a pull request:
+
+npm run lint
+npm run build
+🔒 Security
+
+Security issues should be reported privately.
+
+Please read SECURITY.md.
+
+Never publish:
+
+OAuth secrets
+API keys
+Access tokens
+Refresh tokens
+Private credentials
+
+If a credential is accidentally exposed, revoke it immediately and replace it.
+
+⚠️ Responsible Use
+
+This project is intended for:
+
+Education
+Research
+Development
+SEO experimentation
+AI-agent experimentation
+Website analysis
+Open-source development
+
+Only connect websites, repositories, Google properties, and other resources that you are authorized to access.
+
+Do not use the platform to:
+
+Bypass authentication.
+Access private systems without authorization.
+Circumvent security controls.
+Execute unauthorized commands.
+Modify repositories without permission.
+Access data belonging to other users.
+🎨 Original Project & Attribution
+
+This project is based on and extends the concepts and source code of:
+
+The Delegation
+
+Original author:
+
+Arturo Paracuellos
+
+Original repository:
+
+https://github.com/arturitu/the-delegation
+
+Original project:
+
+https://arturitu.github.io/the-delegation/
+
+The original project uses a dual-license model:
+
+Source code: MIT
+Certain 3D models and assets: CC BY-NC 4.0
+
+The applicable license must be respected for each component.
+
+In particular, CC BY-NC assets must not be treated as MIT-licensed code or used commercially without the required permission.
+
+📜 License
+
+This repository contains derivative work and components originating from the original The Delegation project.
+
+Before redistributing this project, review:
+
+The original source-code license.
+The original 3D asset license.
+Attribution requirements.
+Licenses applicable to newly added dependencies.
+Licenses applicable to newly added assets.
+
+The project is intended for open-source development and experimentation.
+
+📌 Project Status
+
+Experimental / Active Development
+
+The project is continuously evolving.
+
+APIs, integrations, agent tools, UI components, and internal architecture may change between versions.
+
+This project should currently be considered a development and research platform rather than a fully production-ready autonomous deployment system.
+
+🗺️ Roadmap
+
+Potential future improvements include:
+
+Automated technical SEO crawler
+Sitemap analysis
+Robots.txt analysis
+Canonical URL detection
+Structured-data validation
+Open Graph analysis
+Broken-link detection
+Internal-link analysis
+Keyword clustering
+Content-gap analysis
+AI-generated SEO tasks
+GitHub pull-request automation
+SEO monitoring dashboards
+Scheduled audits
+Historical SEO reports
+Multi-site management
+Better human approval workflows
+SEO issue prioritization
+Automated regression checks
+SEO score history
+Competitor analysis
+Content recommendations
+⭐ Why Eldevo AI Agency?
+
+Traditional SEO tools often provide isolated reports.
+
+Eldevo AI Agency is designed around a different workflow:
+
+DATA
+ ↓
+UNDERSTANDING
+ ↓
+AI ANALYSIS
+ ↓
+RECOMMENDATION
+ ↓
+HUMAN APPROVAL
+ ↓
+IMPLEMENTATION
+
+The objective is to connect website intelligence, source-code understanding, SEO data, performance information, and AI-assisted development into one environment.
+
+❤️ Credits
+
+Original project:
+
+The Delegation — Arturo Paracuellos
+
+Extended with additional:
+
+Website intelligence
+SEO analysis
+GitHub tooling
+Google integrations
+PageSpeed analysis
+Google Trends research
+Google Sheets reporting
+AI-agent tools
+Human approval workflows
+📬 Project
+
+GitHub:
+
+https://github.com/muhammed050/demo
+
+Original project:
+
+https://github.com/arturitu/the-delegation
+
+Eldevo AI Agency
+
+Experimental AI-powered website intelligence and SEO automation.
