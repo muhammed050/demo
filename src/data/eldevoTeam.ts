@@ -1,5 +1,5 @@
 import { DEFAULT_MODELS } from '../core/llm/constants';
-import { AgenticSystem } from './agents';
+import type { AgenticSystem } from './agents';
 
 export const ELDEVO_TEAM: AgenticSystem = {
   id: 'eldevo-autonomous-agency',
