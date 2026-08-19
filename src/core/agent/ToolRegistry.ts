@@ -34,7 +34,7 @@ export class ToolRegistry {
     }
     if (phase==='working') {
       if (isLead||isManager) tools.push({type:'function',function:{name:'propose_task',description:'Assign task to agent.',parameters:{type:'object',properties:{title:{type:'string'},description:{type:'string'},agentId:{type:'integer',description:'Agent index'},requiresApproval:{type:'boolean'}},required:['title','description','agentId']}}});
-      tools.push({type:'function',function:{name:'complete_task',description:'Finish task. Output must be raw content.',parameters:{type:'object',properties:{taskId:{type:'string'},output:{type:'string'}},required:['taskId','output']}});
+      tools.push({type:'function',function:{name:'complete_task',description:'Finish task. Output must be raw content.',parameters:{type:'object',properties:{taskId:{type:'string'},output:{type:'string'}},required:['taskId','output']}}});
       if (isLead) tools.push({type:'function',function:{name:'deliver_project',description:'Final delivery of the full project results.',parameters:{type:'object',properties:{output:{type:'string'}},required:['output']}}});
     }
     return [...tools,...getExternalToolDefinitions(agentIndex)];
