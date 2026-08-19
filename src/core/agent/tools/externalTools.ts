@@ -14,7 +14,7 @@ export const EXTERNAL_TOOL_DEFINITIONS = [
   { name:'google_analytics', group:'google', description:'Read GA4 traffic metrics for a connected property.', properties:{propertyId:{type:'string'},startDate:{type:'string'},endDate:{type:'string'}}, required:['propertyId','startDate','endDate'] },
   { name:'google_pagespeed', group:'google', description:'Run a PageSpeed Insights audit for a public URL.', properties:{url:{type:'string'},strategy:{type:'string'}}, required:['url'] },
   { name:'google_trends', group:'google', description:'Research Google Trends interest and related queries using the public Trends feed.', properties:{keyword:{type:'string'},geo:{type:'string'},timeframe:{type:'string'}}, required:['keyword'] },
-  { name:'google_sheets_report', group:'google', description:'Create or append a growth report to a connected Google Sheet.', properties:{spreadsheetId:{type:'string'},title:{type:'string'},values:{type:'array'}}, required:['spreadsheetId','title','values'] }
+  { name:'google_sheets_report', group:'google', description:'Create or append a growth report to a connected Google Sheet.', properties:{spreadsheetId:{type:'string'},title:{type:'string'},values:{type:'array',items:{type:'array',items:{type:'string'}}}}, required:['spreadsheetId','title','values'] }
 ];
 
 export function getExternalToolDefinitions(agentIndex:number):any[] {
@@ -47,3 +47,4 @@ export async function executeExternalTool(name:string,args:any):Promise<{ok:bool
     return {ok:false,result};
   }
 }
+
